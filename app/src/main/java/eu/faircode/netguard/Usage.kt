@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,15 +19,27 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-public class Forward {
-    public int protocol;
-    public int dport;
-    public String raddr;
-    public int rport;
-    public int ruid;
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 
-    @Override
-    public String toString() {
-        return "protocol=" + protocol + " port " + dport + " to " + raddr + "/" + rport + " uid " + ruid;
+class Usage {
+    @JvmField var Time: Long = 0
+    @JvmField var Version: Int = 0
+    @JvmField var Protocol: Int = 0
+    @JvmField var DAddr: String? = null
+    @JvmField var DPort: Int = 0
+    @JvmField var Uid: Int = 0
+    @JvmField var Sent: Long = 0
+    @JvmField var Received: Long = 0
+
+    companion object {
+        private val formatter: DateFormat = SimpleDateFormat.getDateTimeInstance()
+    }
+
+    override fun toString(): String {
+        return formatter.format(Date(Time).time) +
+                " v$Version p$Protocol " +
+                "$DAddr/$DPort uid $Uid out $Sent in $Received"
     }
 }

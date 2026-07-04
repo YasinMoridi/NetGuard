@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,31 +19,29 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 
-public class ResourceRecord {
-    public long Time;
-    public String QName;
-    public String AName;
-    public String Resource;
-    public int TTL;
-    public int uid;
+class ResourceRecord {
+    @JvmField var Time: Long = 0
+    @JvmField var QName: String? = null
+    @JvmField var AName: String? = null
+    @JvmField var Resource: String? = null
+    @JvmField var TTL: Int = 0
+    @JvmField var uid: Int = 0
 
-    private static DateFormat formatter = SimpleDateFormat.getDateTimeInstance();
-
-    public ResourceRecord() {
+    companion object {
+        private val formatter: DateFormat = SimpleDateFormat.getDateTimeInstance()
     }
 
-    @Override
-    public String toString() {
-        return formatter.format(new Date(Time).getTime()) +
+    override fun toString(): String {
+        return formatter.format(Date(Time).time) +
                 " Q " + QName +
                 " A " + AName +
                 " R " + Resource +
                 " TTL " + TTL +
                 " uid " + uid +
-                " " + formatter.format(new Date(Time + TTL * 1000L).getTime());
+                " " + formatter.format(Date(Time + TTL * 1000L).time)
     }
 }

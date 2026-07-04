@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,17 +19,14 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-public class Allowed {
-    public String raddr;
-    public int rport;
+class Forward {
+    @JvmField var protocol: Int = 0
+    @JvmField var dport: Int = 0
+    @JvmField var raddr: String? = null
+    @JvmField var rport: Int = 0
+    @JvmField var ruid: Int = 0
 
-    public Allowed() {
-        this.raddr = null;
-        this.rport = 0;
-    }
-
-    public Allowed(String raddr, int rport) {
-        this.raddr = raddr;
-        this.rport = rport;
+    override fun toString(): String {
+        return "protocol=$protocol port $dport to $raddr/$rport uid $ruid"
     }
 }
