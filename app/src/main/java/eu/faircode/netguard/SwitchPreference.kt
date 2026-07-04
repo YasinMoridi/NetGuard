@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,21 +19,13 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-import android.content.Context;
-import android.util.AttributeSet;
+import android.content.Context
+import android.util.AttributeSet
 
 // https://code.google.com/p/android/issues/detail?id=26194
 
-public class SwitchPreference extends android.preference.SwitchPreference {
-    public SwitchPreference(Context context) {
-        this(context, null);
-    }
-
-    public SwitchPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.switchPreferenceStyle);
-    }
-
-    public SwitchPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-    }
-}
+class SwitchPreference @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = android.R.attr.switchPreferenceStyle
+) : android.preference.SwitchPreference(context, attrs, defStyle)
