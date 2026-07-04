@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,24 +19,31 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-public class Packet {
-    public long time;
-    public int version;
-    public int protocol;
-    public String flags;
-    public String saddr;
-    public int sport;
-    public String daddr;
-    public int dport;
-    public String data;
-    public int uid;
-    public boolean allowed;
+class Packet {
+    @JvmField
+    var time: Long = 0
+    @JvmField
+    var version: Int = 0
+    @JvmField
+    var protocol: Int = 0
+    @JvmField
+    var flags: String? = null
+    @JvmField
+    var saddr: String? = null
+    @JvmField
+    var sport: Int = 0
+    @JvmField
+    var daddr: String? = null
+    @JvmField
+    var dport: Int = 0
+    @JvmField
+    var data: String? = null
+    @JvmField
+    var uid: Int = 0
+    @JvmField
+    var allowed: Boolean = false
 
-    public Packet() {
-    }
-
-    @Override
-    public String toString() {
-        return "uid=" + uid + " v" + version + " p" + protocol + " " + daddr + "/" + dport;
+    override fun toString(): String {
+        return "uid=$uid v$version p$protocol $daddr/$dport"
     }
 }

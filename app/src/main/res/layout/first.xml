@@ -31,7 +31,7 @@
                 android:textAppearance="@style/TextLarge"
                 android:textStyle="bold" />
         </LinearLayout>
-        
+
         <TextView
             android:id="@+id/tvFirst"
             android:layout_width="wrap_content"
