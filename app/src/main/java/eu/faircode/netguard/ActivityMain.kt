@@ -56,6 +56,11 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.platform.ComposeView
+import eu.faircode.netguard.ui.AboutScreen
+import eu.faircode.netguard.ui.LegendScreen
+import eu.faircode.netguard.ui.VpnScreen
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -206,8 +211,13 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                         onActivityResult(REQUEST_VPN, RESULT_OK, null)
                     } else {
                         // Show dialog
-                        val inflater = LayoutInflater.from(this@ActivityMain)
-                        val view = inflater.inflate(R.layout.vpn, null, false)
+                        val view = ComposeView(this@ActivityMain).apply {
+                            setContent {
+                                MaterialTheme {
+                                    VpnScreen()
+                                }
+                            }
+                        }
                         dialogVpn = AlertDialog.Builder(this@ActivityMain)
                             .setView(view)
                             .setCancelable(false)
@@ -1035,41 +1045,12 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun menu_legend() {
-        val tvAttr = TypedValue()
-        theme.resolveAttribute(R.attr.colorOn, tvAttr, true)
-        val colorOn = tvAttr.data
-        theme.resolveAttribute(R.attr.colorOff, tvAttr, true)
-        val colorOff = tvAttr.data
-
-        // Create view
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.legend, null, false)
-        val ivLockdownOn = view.findViewById<ImageView>(R.id.ivLockdownOn)
-        val ivWifiOn = view.findViewById<ImageView>(R.id.ivWifiOn)
-        val ivWifiOff = view.findViewById<ImageView>(R.id.ivWifiOff)
-        val ivOtherOn = view.findViewById<ImageView>(R.id.ivOtherOn)
-        val ivOtherOff = view.findViewById<ImageView>(R.id.ivOtherOff)
-        val ivScreenOn = view.findViewById<ImageView>(R.id.ivScreenOn)
-        val ivHostAllowed = view.findViewById<ImageView>(R.id.ivHostAllowed)
-        val ivHostBlocked = view.findViewById<ImageView>(R.id.ivHostBlocked)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            val wrapLockdownOn = DrawableCompat.wrap(ivLockdownOn.drawable)
-            val wrapWifiOn = DrawableCompat.wrap(ivWifiOn.drawable)
-            val wrapWifiOff = DrawableCompat.wrap(ivWifiOff.drawable)
-            val wrapOtherOn = DrawableCompat.wrap(ivOtherOn.drawable)
-            val wrapOtherOff = DrawableCompat.wrap(ivOtherOff.drawable)
-            val wrapScreenOn = DrawableCompat.wrap(ivScreenOn.drawable)
-            val wrapHostAllowed = DrawableCompat.wrap(ivHostAllowed.drawable)
-            val wrapHostBlocked = DrawableCompat.wrap(ivHostBlocked.drawable)
-
-            DrawableCompat.setTint(wrapLockdownOn, colorOff)
-            DrawableCompat.setTint(wrapWifiOn, colorOn)
-            DrawableCompat.setTint(wrapWifiOff, colorOff)
-            DrawableCompat.setTint(wrapOtherOn, colorOn)
-            DrawableCompat.setTint(wrapOtherOff, colorOff)
-            DrawableCompat.setTint(wrapScreenOn, colorOn)
-            DrawableCompat.setTint(wrapHostAllowed, colorOn)
-            DrawableCompat.setTint(wrapHostBlocked, colorOff)
+        val view = ComposeView(this).apply {
+            setContent {
+                MaterialTheme {
+                    LegendScreen()
+                }
+            }
         }
 
         // Show dialog
@@ -1123,29 +1104,20 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun menu_about() {
-        // Create view
-        val inflater = LayoutInflater.from(this)
-        val view = inflater.inflate(R.layout.about, null, false)
-        val tvVersionName = view.findViewById<TextView>(R.id.tvVersionName)
-        val tvVersionCode = view.findViewById<TextView>(R.id.tvVersionCode)
-        val btnRate = view.findViewById<Button>(R.id.btnRate)
-        val tvEula = view.findViewById<TextView>(R.id.tvEula)
-        val tvPrivacy = view.findViewById<TextView>(R.id.tvPrivacy)
-
-        // Show version
-        tvVersionName.text = Util.getSelfVersionName(this)
-        if (!Util.hasValidFingerprint(this))
-            tvVersionName.setTextColor(Color.GRAY)
-        tvVersionCode.text = Util.getSelfVersionCode(this).toString()
-
-        // Handle license
-        tvEula.movementMethod = LinkMovementMethod.getInstance()
-        tvPrivacy.movementMethod = LinkMovementMethod.getInstance()
-
-        // Handle rate
-        btnRate.visibility = if (getIntentRate(this).resolveActivity(packageManager) == null) View.GONE else View.VISIBLE
-        btnRate.setOnClickListener {
-            startActivity(getIntentRate(this@ActivityMain))
+        val view = ComposeView(this).apply {
+            setContent {
+                MaterialTheme {
+                    AboutScreen(
+                        versionName = Util.getSelfVersionName(this@ActivityMain),
+                        versionCode = Util.getSelfVersionCode(this@ActivityMain),
+                        onRateClick = {
+                            if (getIntentRate(this@ActivityMain).resolveActivity(packageManager) != null) {
+                                startActivity(getIntentRate(this@ActivityMain))
+                            }
+                        }
+                    )
+                }
+            }
         }
 
         // Show dialog
