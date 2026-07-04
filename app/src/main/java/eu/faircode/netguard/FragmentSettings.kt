@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,14 +19,14 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.os.Bundle
+import android.preference.PreferenceFragment
 
-public class FragmentSettings extends PreferenceFragment {
+@Suppress("DEPRECATION")
+class FragmentSettings : PreferenceFragment() {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        addPreferencesFromResource(R.xml.preferences);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addPreferencesFromResource(R.xml.preferences)
     }
 }

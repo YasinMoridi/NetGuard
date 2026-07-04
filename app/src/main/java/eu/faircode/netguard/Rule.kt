@@ -141,7 +141,8 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                 pkg = false
             }
             else -> {
-                dh.getApp(this.packageName).use { cursor ->
+                val pkgName = info.packageName
+                dh.getApp(pkgName).use { cursor ->
                     if (cursor.moveToNext()) {
                         name = cursor.getString(cursor.getColumnIndexOrThrow("label"))
                         system = cursor.getInt(cursor.getColumnIndexOrThrow("system")) > 0
@@ -149,10 +150,10 @@ class Rule private constructor(dh: DatabaseHelper, info: PackageInfo, context: C
                         enabled = cursor.getInt(cursor.getColumnIndexOrThrow("enabled")) > 0
                     } else {
                         name = getLabel(info, context)
-                        system = isSystem(info.packageName, context)
-                        internet = hasInternet(info.packageName, context)
+                        system = isSystem(pkgName, context)
+                        internet = hasInternet(pkgName, context)
                         enabled = isEnabled(info, context)
-                        dh.addApp(this.packageName, name, system, internet, enabled)
+                        dh.addApp(pkgName, name, system, internet, enabled)
                     }
                 }
             }

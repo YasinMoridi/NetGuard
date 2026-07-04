@@ -388,6 +388,7 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 } finally {
                     iab.unbind()
                 }
+                Unit
             }, this)
             iab?.bind()
         } catch (ex: Throwable) {

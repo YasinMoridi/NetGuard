@@ -1,4 +1,4 @@
-package eu.faircode.netguard;
+package eu.faircode.netguard
 
 /*
     This file is part of NetGuard.
@@ -19,27 +19,19 @@ package eu.faircode.netguard;
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.ListView;
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.ListView
 
 // This requires list view items with equal heights
 
-public class ExpandedListView extends ListView {
-    public ExpandedListView(Context context) {
-        super(context);
-    }
+class ExpandedListView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : ListView(context, attrs, defStyleAttr) {
 
-    public ExpandedListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public ExpandedListView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 4, MeasureSpec.AT_MOST));
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(Int.MAX_VALUE shr 4, MeasureSpec.AT_MOST))
     }
 }

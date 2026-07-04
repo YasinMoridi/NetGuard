@@ -19,6 +19,7 @@ package eu.faircode.netguard
     Copyright 2015-2026 by Marcel Bokhorst (M66B)
 */
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -143,6 +144,7 @@ class DownloadTask(private val context: Context, private val url: URL, private v
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun showNotification(progress: Int) {
         val main = Intent(context, ActivitySettings::class.java)
         val pi = PendingIntentCompat.getActivity(context, ServiceSinkhole.NOTIFY_DOWNLOAD, main, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -165,7 +167,8 @@ class DownloadTask(private val context: Context, private val url: URL, private v
         }
 
         if (Util.canNotify(context)) {
-            NotificationManagerCompat.from(context).notify(ServiceSinkhole.NOTIFY_DOWNLOAD, builder.build())
+            val notification = builder.build()
+            NotificationManagerCompat.from(context).notify(ServiceSinkhole.NOTIFY_DOWNLOAD, notification)
         }
     }
 
